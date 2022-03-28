@@ -1,0 +1,19 @@
+<html>
+<head><title>Details for Playlist</title></head>
+<body>
+<!--/*@thymesVar id="playlist" type="entity.Playlist"*/-->
+<h1>Details for playlist</h1>
+<ul>
+  <li>Playlist: <span th:text="${playlist.name}">playlist name</span></li>
+  <li>Tracks:
+    <ul>
+      <li th:each="track : ${playlist.tracks}">
+        <!--/*@thymesVar id="track" type="entity.Track"*/-->
+        <a th:href="'/track/' + ${track.id}"><span th:text="${track.name}">track name</span></a>
+        (<span th:text="${track.duration}">3 mins</span>)
+      </li>
+    </ul>
+  </li>
+</ul>
+</body>
+</html>

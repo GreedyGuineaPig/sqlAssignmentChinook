@@ -1,0 +1,14 @@
+<html>
+<head><title>Details for Track</title></head>
+<body>
+<!--/*@thymesVar id="track" type="entity.Track"*/-->
+<h1>Details for Track</h1>
+<ul>
+  <li>Title: <span th:text="${track.name}">album title</span></li>
+  <li>Album: <a th:href="'/album/' + ${track.album.id}"><span th:text="${track.album.title}">album name</span></a></li>
+  <li>Duration: [[${track.duration}]]</li>
+  <li>Genre: <a th:href="'/genre/'+ ${track.genre.id}" th:text="${track.genre.name}">genre</a></li>
+  <li>Media format: [[${track.mediaType.name}]]</li>
+</ul>
+</body>
+</html>

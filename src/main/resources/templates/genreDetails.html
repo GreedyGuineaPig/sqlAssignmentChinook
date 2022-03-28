@@ -1,0 +1,13 @@
+<html>
+<head><title>Details for Genre</title></head>
+<body>
+<h1>Details for Genre</h1>
+<ul>
+  <!--/*@thymesVar id="genreStats" type="entity.GenreStats"*/-->
+  <li>Genre: <span th:text="${genreStats.genre.name}">genre</span></li>
+  <li><span th:text="${genreStats.artists}">3</span> artists with tracks from that genre</li>
+  <li><span th:text="${genreStats.albums}">10</span> albums with tracks from that genre</li>
+  <li><span th:text="${genreStats.tracks}">23</span> tracks from that genre</li>
+</ul>
+</body>
+</html>

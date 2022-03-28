@@ -1,0 +1,14 @@
+<html>
+<head><title>List of Genres</title></head>
+<body>
+<h1>List of genres</h1>
+<ul>
+  <!--/*@thymesVar id="genreCounts" type="List<entity.GenreAndCount>"*/-->
+  <li th:each="genreCount: ${genreCounts}">
+  <!--/*@thymesVar id="genreCount" type="entity.GenreAndCount"*/-->
+  <a th:href="'/genre/' + ${genreCount.genreId}"><span th:text="${genreCount.genreName}">Genre name</span></a>:
+    <span th:text="${genreCount.count}">0</span> tracks
+  </li>
+</ul>
+</body>
+</html>

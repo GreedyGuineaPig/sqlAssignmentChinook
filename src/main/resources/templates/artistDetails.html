@@ -1,0 +1,19 @@
+<html>
+<head><title>Details for Artist</title></head>
+<body>
+<!--/*@thymesVar id="artist" type="entity.Artist"*/-->
+<h1>Details for Artist</h1>
+<ul>
+  <li>Artist: <span th:text="${artist.name}">artist name</span></li>
+  <li>Albums:
+    <ul>
+      <li th:each="album : ${artist.albums}">
+        <!--/*@thymesVar id="album" type="entity.Album"*/-->
+        <a th:href="'/album/' + ${album.id}"><span th:text="${album.title}">album title</span></a>
+        (<span th:text="${album.tracks.size}">3</span> tracks)
+      </li>
+    </ul>
+  </li>
+</ul>
+</body>
+</html>
