@@ -15,7 +15,7 @@ public class Artist {
     @Column(name = "Name")
     private String name;
 
-    @Transient
+    @OneToMany(mappedBy = "artist")
     private List<Album> albums = new ArrayList<>();
 
     public Integer getId() {
