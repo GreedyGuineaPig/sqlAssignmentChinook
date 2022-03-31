@@ -34,7 +34,15 @@ public class DbHelper {
     }
 
     GenreStats getGenreStatsForId(Integer id) {
-        return null;
+        EntityManager em = factory.createEntityManager();
+        Genre genre = em.find(Genre.class, id);
+//        List resultList = em.createQuery(
+//                "select count(distinct t.id), count(distinct t.album), count(distinct t.album.artist) " +
+//                        "from Track t fetch all properties where t.genre = :genre").setParameter("genre", genre).getResultList();
+        long numOfTrack = (long) em.createQuery("select count(distinct t.id) from Track t where t.genre = :genre").setParameter("genre", genre).getSingleResult();
+        long numOfAlbum = (long) em.createQuery("select count(distinct al.id) from Album al join al.tracks as t where t.genre = :genre").setParameter("genre", genre).getSingleResult();
+        long numOfArtist = (long) em.createQuery("select count(distinct ar.id) from Track t join t.album as al join al.artist as ar where t.genre = :genre").setParameter("genre", genre).getSingleResult();
+        return new GenreStats(genre, numOfArtist, numOfAlbum, numOfTrack);
     }
 
     Artist getArtistForId(Integer artistId) {
