@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity(name = "Artist")
+@Entity
 @Table(name = "artists")
 public class Artist {
     @Id

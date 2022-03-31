@@ -3,15 +3,22 @@ package entity;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-
+@Entity
+@Table(name = "albums")
 public class Album {
 
+    @Id
+    @Column(name = "AlbumId")
     private Integer id;
 
+    @Column(name = "Title")
     private String title;
 
+    @JoinColumn(name = "ArtistId")
+    @ManyToOne
     private Artist artist;
 
+    @Transient
     private List<Track> tracks = new ArrayList<>();
 
     public int getId() {

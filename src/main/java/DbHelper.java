@@ -23,7 +23,8 @@ public class DbHelper {
     }
 
     Album getAlbumForId(Integer albumId) {
-        return null;
+        EntityManager em = factory.createEntityManager();
+        return em.find(Album.class, albumId);
     }
 
     Track getTrackForId(Integer trackId) {
