@@ -14,7 +14,8 @@ public class DbHelper {
     }
 
     List<Artist> getAllArtists()  {
-        return null;
+        EntityManager em = factory.createEntityManager();
+        return em.createQuery("from Artist a order by name", Artist.class).getResultList();
     }
 
     List<Album> getAllAlbums() {
