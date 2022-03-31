@@ -4,19 +4,32 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(name = "tracks")
 public class Track {
+    @Id
+    @Column(name = "TrackId")
     private int id;
 
+    @Column(name = "Name")
     private String name;
 
+    @ManyToOne
+    @JoinColumn(name = "albumId")
     private Album album;
 
+    @ManyToOne
+    @JoinColumn(name = "MediaTypeId")
     private MediaType mediaType;
 
+    @ManyToOne
+    @JoinColumn(name = "GenreId")
     private Genre genre;
 
+    @Transient
     private List<Playlist> playlists = new ArrayList<>();
 
+    @Column(name = "milliseconds")
     private int millis;  // The track duration in milliseconds
 
     public int getId() {

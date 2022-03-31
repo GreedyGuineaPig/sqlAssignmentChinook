@@ -29,7 +29,8 @@ public class DbHelper {
     }
 
     Track getTrackForId(Integer trackId) {
-        return null;
+        EntityManager em = factory.createEntityManager();
+        return em.find(Track.class, trackId);
     }
 
     GenreStats getGenreStatsForId(Integer id) {
