@@ -2,6 +2,7 @@ import entity.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,8 +13,8 @@ public class DbHelper {
         this.factory = factory;
     }
 
-    List<Artist> getAllArtists() {
-        return new ArrayList<>();
+    List<Artist> getAllArtists()  {
+        return null;
     }
 
     List<Album> getAllAlbums() {
@@ -33,7 +34,8 @@ public class DbHelper {
     }
 
     Artist getArtistForId(Integer artistId) {
-        return null;
+        EntityManager em = factory.createEntityManager();
+        return em.find(Artist.class, artistId);
     }
 
     Playlist getPlaylistForId(Integer id) {

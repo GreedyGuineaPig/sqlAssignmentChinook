@@ -4,11 +4,18 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity(name = "Artist")
+@Table(name = "artists")
 public class Artist {
+    @Id
+    @Basic
+    @Column(name = "ArtistId")
     private Integer id;
 
+    @Column(name = "Name")
     private String name;
 
+    @Transient
     private List<Album> albums = new ArrayList<>();
 
     public Integer getId() {
