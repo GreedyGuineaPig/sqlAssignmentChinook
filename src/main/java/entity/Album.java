@@ -18,7 +18,7 @@ public class Album {
     @ManyToOne
     private Artist artist;
 
-    @Transient
+    @OneToMany(mappedBy = "album")
     private List<Track> tracks = new ArrayList<>();
 
     public int getId() {
