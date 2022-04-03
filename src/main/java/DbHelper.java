@@ -4,7 +4,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.criteria.CriteriaBuilder;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DbHelper {
     private final EntityManagerFactory factory;
@@ -36,13 +39,14 @@ public class DbHelper {
     GenreStats getGenreStatsForId(Integer id) {
         EntityManager em = factory.createEntityManager();
         Genre genre = em.find(Genre.class, id);
-//        List resultList = em.createQuery(
-//                "select count(distinct t.id), count(distinct t.album), count(distinct t.album.artist) " +
-//                        "from Track t fetch all properties where t.genre = :genre").setParameter("genre", genre).getResultList();
-        long numOfTrack = (long) em.createQuery("select count(distinct t.id) from Track t where t.genre = :genre").setParameter("genre", genre).getSingleResult();
-        long numOfAlbum = (long) em.createQuery("select count(distinct al.id) from Album al join al.tracks as t where t.genre = :genre").setParameter("genre", genre).getSingleResult();
-        long numOfArtist = (long) em.createQuery("select count(distinct ar.id) from Track t join t.album as al join al.artist as ar where t.genre = :genre").setParameter("genre", genre).getSingleResult();
-        return new GenreStats(genre, numOfArtist, numOfAlbum, numOfTrack);
+        List<Object[]> resultList = em.createQuery(
+                "select count(distinct t.id), count(distinct t.album), count(distinct t.album.artist) " +
+                        "from Track t fetch all properties where t.genre = :genre").setParameter("genre", genre).getResultList();
+        ArrayList<Long> list = new ArrayList();
+        for(Object obj: resultList.get(0)){
+            list.add((Long) obj);
+        }
+        return new GenreStats(genre, list.get(2), list.get(1), list.get(0));
     }
 
     Artist getArtistForId(Integer artistId) {
