@@ -6,7 +6,7 @@
   <!--/*@thymesVar id="playlists" type="List<entity.Playlist>"*/-->
   <li th:each="playlist: ${playlists}">
   <!--/*@thymesVar id="playlist" type="entity.Playlist"*/-->
-  <a th:href="'/playlist/' + ${playlist.id}"><i th:text="${playlist.name}">Playlist name</i></a>
+  <a th:href="'/playlist/' + ${playlist.id}"><i th:text="${playlist.name}">Playlist name</i><i th:text=" ' (' + ${#lists.size(playlist.getTracks())} + 'tracks)'"> (Num of Tracks)</i></a>
   </li>
 </ul>
 </body>

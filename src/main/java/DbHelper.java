@@ -64,6 +64,6 @@ public class DbHelper {
 
     List<Playlist> getAllPlaylists() {
         EntityManager em = factory.createEntityManager();
-        return em.createQuery("select p from Playlist as p", Playlist.class).getResultList();
+        return em.createQuery("select p from Playlist p", Playlist.class).getResultList();
     }
 }
