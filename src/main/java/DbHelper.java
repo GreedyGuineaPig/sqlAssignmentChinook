@@ -39,14 +39,9 @@ public class DbHelper {
     GenreStats getGenreStatsForId(Integer id) {
         EntityManager em = factory.createEntityManager();
         Genre genre = em.find(Genre.class, id);
-        List<Object[]> resultList = em.createQuery(
-                "select count(distinct t.id), count(distinct t.album), count(distinct t.album.artist) " +
-                        "from Track t fetch all properties where t.genre = :genre").setParameter("genre", genre).getResultList();
-        ArrayList<Long> list = new ArrayList();
-        for(Object obj: resultList.get(0)){
-            list.add((Long) obj);
-        }
-        return new GenreStats(genre, list.get(2), list.get(1), list.get(0));
+        return (GenreStats) em.createQuery(
+                "select new entity.GenreStats(:genre, count(distinct t.album.artist), count(distinct t.album), count(distinct t.id)) " +
+                        "from Track t fetch all properties where t.genre = :genre").setParameter("genre", genre).getSingleResult();
     }
 
     Artist getArtistForId(Integer artistId) {
@@ -56,16 +51,19 @@ public class DbHelper {
 
     Playlist getPlaylistForId(Integer id) {
         EntityManager em = factory.createEntityManager();
-        return (Playlist) em.createQuery("select p from Playlist p where p.id=: id").setParameter("id", id).getSingleResult();
+        return em.createQuery("select p from Playlist p where p.id=: id",
+                Playlist.class).setParameter("id", id).getSingleResult();
     }
 
     List<GenreAndCount> getAllGenresWithCounts() {
         EntityManager em = factory.createEntityManager();
-        List<GenreAndCount> resultList = em.createQuery("select new entity.GenreAndCount(t.genre.id, t.genre.name, count(t.name)) from Track as t fetch all properties group by t.genre order by count(t.name) desc ").getResultList();
-        return resultList;
+        return em.createQuery("select new entity.GenreAndCount(t.genre.id, t.genre.name, count(t.name)) " +
+                "from Track as t fetch all properties group by t.genre order by count(t.name) desc "
+                , GenreAndCount.class).getResultList();
     }
 
     List<Playlist> getAllPlaylists() {
-        return new ArrayList<>();
+        EntityManager em = factory.createEntityManager();
+        return em.createQuery("select p from Playlist as p", Playlist.class).getResultList();
     }
 }
