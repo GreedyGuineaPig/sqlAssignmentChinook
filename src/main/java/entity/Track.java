@@ -26,7 +26,7 @@ public class Track {
     @JoinColumn(name = "GenreId")
     private Genre genre;
 
-    @Transient
+    @ManyToMany(mappedBy = "tracks")
     private List<Playlist> playlists = new ArrayList<>();
 
     @Column(name = "milliseconds")

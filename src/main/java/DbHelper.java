@@ -55,13 +55,13 @@ public class DbHelper {
     }
 
     Playlist getPlaylistForId(Integer id) {
-        return null;
+        EntityManager em = factory.createEntityManager();
+        return (Playlist) em.createQuery("select p from Playlist p where p.id=: id").setParameter("id", id).getSingleResult();
     }
 
     List<GenreAndCount> getAllGenresWithCounts() {
         EntityManager em = factory.createEntityManager();
         List<GenreAndCount> resultList = em.createQuery("select new entity.GenreAndCount(t.genre.id, t.genre.name, count(t.name)) from Track as t fetch all properties group by t.genre order by count(t.name) desc ").getResultList();
-//        select g.Name, count(t.name) from Tracks t JOIN genres g on t.GenreId = g.GenreId GROUP BY g.name
         return resultList;
     }
 
